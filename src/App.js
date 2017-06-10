@@ -1,18 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import DisplayList from './displayList.js';
+import List from './list.js';
+
 
 class App extends Component {
+
+  constructor (props) {
+    super (props);
+    this.state = {items: [], query:""};
+
+    this.addItem = this.addItem.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+    addItem (e) {
+      e.preventDefault();
+
+      var itemArray = this.state.items;
+
+      console.log(e.target.value);
+
+      itemArray.push (
+        {
+            text: this.state.query,
+            key: Date.now()
+        }
+      );
+
+      this.setState({
+        items: itemArray
+      });
+
+      //this._inputElement.value = "";
+
+    }
+
+    handleChange (e) {
+      this.setState({
+        query: e.target.value
+      })
+    }
+//so before we're passing props down to the component
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <List handleChange= {this.handleChange} addItem = {this.addItem}/>
+        <DisplayList items= {this.state.items}/>
       </div>
     );
   }
