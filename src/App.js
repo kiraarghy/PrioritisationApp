@@ -14,8 +14,8 @@ class App extends Component {
         query:""
       };
 
-  this.addItem = this.addItem.bind(this);
-  this.handleChange = this.handleChange.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   addItem (e) {
@@ -64,14 +64,14 @@ class App extends Component {
             <div className="Interactive-buttonleft"
               onClick={onClickGenerator('Display List')}>
               <h1 className ="Cool-Styling">List</h1>
+            </div>
+          </div>
+          <div className="Dynamic-Elements-Container">
+            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
+            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items}/></div>
           </div>
         </div>
-        <div className="Dynamic-Elements-Container">
-          <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
-          <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items}/></div>
-        </div>
       </div>
-    </div>
     );
   }
 }

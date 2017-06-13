@@ -8,11 +8,11 @@ import PropTypes from 'prop-types';
 const DisplayList = (props) => {
   return (
     <div className="Box">
-    <div>
-      {props.items.map((item, index) => {
-        return <div key = {index}>{item.text}</div>})
-      }
-    </div>
+      <div>
+        {props.items.map((item, index) => {
+          return <div key = {index}>{item.text}</div>})
+        }
+      </div>
   </div>
   );
 }

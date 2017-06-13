@@ -7,7 +7,7 @@ class List extends Component {
   render () {
     return (
       <div className="Box">
-      <div className="todoListMain">
+        <div className="todoListMain">
           <div className="header">
             <form onSubmit={this.props.addItem}>
               <input ref={(a) => this._inputElement = a}
@@ -19,9 +19,9 @@ class List extends Component {
           </div>
         </div>
       </div>
-      );
-    }
+    );
   }
+}
 
 List.propTypes = {
   addItem:PropTypes.func.isRequired,
