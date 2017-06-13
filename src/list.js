@@ -6,6 +6,7 @@ class List extends Component {
 
   render () {
     return (
+      <div className="Box">
       <div className="todoListMain">
           <div className="header">
             <form onSubmit={this.props.addItem}>
@@ -17,6 +18,7 @@ class List extends Component {
             </form>
           </div>
         </div>
+      </div>
       );
     }
   }

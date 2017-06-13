@@ -6,48 +6,72 @@ import List from './list.js';
 
 class App extends Component {
 
-  constructor (props) {
-    super (props);
-    this.state = {items: [], query:""};
+  constructor(props) {
+    super(props);
+      this.state = {
+        selectedTab: null,
+        items: [],
+        query:""
+      };
 
-    this.addItem = this.addItem.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+  this.addItem = this.addItem.bind(this);
+  this.handleChange = this.handleChange.bind(this);
   }
 
-    addItem (e) {
-      e.preventDefault();
+  addItem (e) {
+    e.preventDefault();
 
-      var itemArray = this.state.items;
+    var itemArray = this.state.items;
 
-      console.log(e.target.value);
+    console.log(e.target.value);
 
-      itemArray.push (
-        {
-            text: this.state.query,
-            key: Date.now()
-        }
-      );
+    itemArray.push (
+      {
+          text: this.state.query,
+          key: Date.now()
+      }
+    );
 
-      this.setState({
-        items: itemArray
-      });
+    this.setState({
+      items: itemArray
+    });
 
-      //this._inputElement.value = "";
+    //this._inputElement.value = "";
 
-    }
+  }
 
-    handleChange (e) {
-      this.setState({
-        query: e.target.value
-      })
-    }
-//so before we're passing props down to the component
+  handleChange (e) {
+    this.setState({
+      query: e.target.value
+    })
+  }
+
+
   render() {
+
+    var onClickGenerator = (Tab) => {
+      return () => {this.setState({selectedTab: Tab})}
+    }
+
     return (
-      <div>
-        <List handleChange= {this.handleChange} addItem = {this.addItem}/>
-        <DisplayList items= {this.state.items}/>
+      <div className="App">
+        <div className="App-header">
+          <div className ="container-buttons">
+            <div className="Interactive-buttonleft"
+              onClick={onClickGenerator('Text Input')}>
+              <h1 className ="Cool-Styling">Input</h1>
+            </div>
+            <div className="Interactive-buttonleft"
+              onClick={onClickGenerator('Display List')}>
+              <h1 className ="Cool-Styling">List</h1>
+          </div>
+        </div>
+        <div className="Dynamic-Elements-Container">
+          <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
+          <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items}/></div>
+        </div>
       </div>
+    </div>
     );
   }
 }
