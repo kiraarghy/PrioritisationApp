@@ -39,9 +39,6 @@
   display: inline-block;
   width: 15%;
   height: 10%;
-  -webkit-transform: skew(20deg);
-     -moz-transform: skew(20deg);
-       -o-transform: skew(20deg);
   padding: 2%;
   margin: 10px;
   background-color: #FFFFFF;
@@ -49,9 +46,6 @@
 
 .Cool-Styling {
   font-size: 2vW;
-  -webkit-transform: skew(-20deg);
-     -moz-transform: skew(-20deg);
-       -o-transform: skew(-20deg);
   color: #000000
 }
 
