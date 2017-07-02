@@ -28,7 +28,8 @@ class App extends Component {
     itemArray.push (
       {
           text: this.state.query,
-          key: Date.now()
+          key: Date.now(),
+          count: this.state.items.length +1
       }
     );
 
@@ -36,6 +37,7 @@ class App extends Component {
       items: itemArray
     });
 
+    console.log(this.state.items);
     //this._inputElement.value = "";
 
   }
@@ -61,6 +63,13 @@ class App extends Component {
           items: sortItems
         });
     }
+// //not gonna work because adding plus 1 to i will just cause it to become that?
+//     var Increase = () => {
+//       var increaseCount = this.state.items;
+//       console.log(items);
+//       return () => {this.setState({ count: this.state.items.count[i-1] +5})}
+//       console.log(items);
+//     }
 
 
     return (

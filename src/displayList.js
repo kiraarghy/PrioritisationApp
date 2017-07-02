@@ -10,7 +10,9 @@ const DisplayList = (props) => {
     <div className="Box">
       <div>
         {props.items.map((item, index) => {
-          return <div key = {index}>{item.text}</div>})
+          return <div key = {index}>{item.text}
+            <button type="submit">Increase Priority</button>
+          </div>})
         }
       </div>
   </div>
