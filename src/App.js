@@ -63,6 +63,19 @@ class App extends Component {
           items: sortItems
         });
     }
+
+    // var countSort = () => {
+    //     var sortItems = this.state.items;
+    //     sortItems.sort(function(a,b) {return (a.count > b.count) ? 1 : ((b.count > a.count) ? -1 : 0); });
+    //     this.setState({
+    //       items: sortItems
+    //     });
+    // }
+
+    // var increaseCount = (a) => {
+    //   var increasedCount = this.state.items;
+    //   console.log(this.state.items.count[a]);
+    // }
 // //not gonna work because adding plus 1 to i will just cause it to become that?
 //     var Increase = () => {
 //       var increaseCount = this.state.items;
