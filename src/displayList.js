@@ -14,13 +14,19 @@ import PropTypes from 'prop-types';
 
 const DisplayList = (props) => {
 
+  const sortedItems = props.items.map((item, i) => {
+    const x = item
+    x.id = i
+    return (x);
+  }).sort(function(a,b) {return (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1: 0);})
+
   var increaseCount = () => {
     console.log("oranges")
   }
 
-  var thisthing = (item) => {
+  var thisthing = (item, item2) => {
     return () =>
-    console.log(item);
+    props.onPrioritise(item.id, item2.id);
   }
 //so we need to put in the return ()=> in the f(thisthing) as this declares the function console.log
 //if we do not declare and simply exexcute console.log when this thing is executed by the onCLick handler
@@ -30,9 +36,9 @@ const DisplayList = (props) => {
   return (
     <div className="Box">
       <div>
-        {props.items.map((item, index) => {
+        {sortedItems.map((item, index) => {
           return <div key = {index}>{item.text}
-            <button id={item.count} onClick={thisthing(item)} type="submit">Increase Priority</button>
+            {item.priority > 1 && <button onClick={thisthing(item, sortedItems[index-1])} type="submit">Increase Priority</button>}
           </div>})
         }
       </div>

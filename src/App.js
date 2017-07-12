@@ -28,8 +28,7 @@ class App extends Component {
     itemArray.push (
       {
           text: this.state.query,
-          key: Date.now(),
-          count: this.state.items.length +1
+          priority: this.state.items.length +1
       }
     );
 
@@ -63,6 +62,18 @@ class App extends Component {
           items: sortItems
         });
     }
+
+    var prioritySwap = (id1, id2) => {
+        var prioritySwapped = this.state.items;
+        var priority1 = prioritySwapped[id1].priority;
+        var priority2 = prioritySwapped[id2].priority;
+        prioritySwapped[id1].priority = priority2;
+        prioritySwapped[id2].priority = priority1;
+        this.setState({
+          items: prioritySwapped
+        })
+    }
+
 
     // var countSort = () => {
     //     var sortItems = this.state.items;
@@ -103,7 +114,7 @@ class App extends Component {
           </div>
           <div className="Dynamic-Elements-Container">
             <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
-            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items}/></div>
+            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items} onPrioritise= {prioritySwap}/></div>
           </div>
         </div>
       </div>
