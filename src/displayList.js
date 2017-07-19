@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import PropTypes from 'prop-types';
+import DisplayListItem from "./displayListItem.js";
 
 //look at prop-types
 //items:PropTypes.array
@@ -12,44 +13,42 @@ import PropTypes from 'prop-types';
   // var increasedCount = this.state.items;
   // console.log(item);
 
+//start thinking about structuring code, e.g. here we've separated out stuff refering to list from stuff referring to item
+
 const DisplayList = (props) => {
 
   const sortedItems = props.items.map((item, i) => {
     const x = item
     x.id = i
     return (x);
-  }).sort(function(a,b) {return (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1: 0);})
+  }).sort(function(a,b) {return (a.priority > b.priority) ? 1 : ((b.priority > a.priority) ? -1: 0);});
 
-  var increaseCount = () => {
-    console.log("oranges")
-  }
-
-  var thisthing = (item, item2) => {
+  var prioritiseThis = (item, item2) => {
     return () =>
     props.onPrioritise(item.id, item2.id);
-  }
-//so we need to put in the return ()=> in the f(thisthing) as this declares the function console.log
-//if we do not declare and simply exexcute console.log when this thing is executed by the onCLick handler
-//it will execute everytime the onClick handler is called regardles of context.
-//tl:dr put the thing you wanna call in two levels deep to stop it from executing and causing your stuff to mess up.
-//cool huh?
+  };
+
+  var editThis = (item) => {
+    return () => console.log(item);
+  };
+
+  var renderedSortedItems = sortedItems.map(
+    (item, index) => {
+      return <DisplayListItem item={item} prioritiseThis={prioritiseThis(item, sortedItems[index-1])} editThis={editThis} key={index}/>;
+    }
+  );
+
   return (
     <div className="Box">
       <div>
-        {sortedItems.map((item, index) => {
-          return <div key = {index}>{item.text}
-            {item.priority > 1 && <button onClick={thisthing(item, sortedItems[index-1])} type="submit">Increase Priority</button>}
-          </div>})
-        }
+        {renderedSortedItems}
       </div>
   </div>
   );
-}
+};
 
-// nSubmit={this.props.increaseCount()}
-
-DisplayList.propTypes ={
-  items:PropTypes.array.isRequired
+DisplayList.propTypes = {
+  items: PropTypes.array.isRequired
 }
 
 export default DisplayList;
