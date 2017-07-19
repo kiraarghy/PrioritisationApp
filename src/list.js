@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 class List extends Component {
 
+//bug don't allow empty fields
+
   render () {
     return (
       <div className="Box">

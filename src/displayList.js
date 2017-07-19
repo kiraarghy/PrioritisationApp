@@ -3,6 +3,7 @@ import './App.css';
 import PropTypes from 'prop-types';
 import DisplayListItem from "./displayListItem.js";
 
+
 //look at prop-types
 //items:PropTypes.array
 

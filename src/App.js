@@ -9,9 +9,10 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        selectedTab: null,
+        selectedTab: 'Text Input',
         items: [],
-        query:""
+        query:"",
+        selectedButton: 'text'
       };
 
     this.addItem = this.addItem.bind(this);
