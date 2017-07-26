@@ -6,22 +6,39 @@ console.log("displayListItem loaded");
 
 const DisplayListItem = (props) => {
 
-var ondisplay = (editOrText) => {
-   return () => {this.setState({selectedButton: editOrText})}
-}
+
 
 var textDisplay = <span>{props.item.text}</span>
 
+var textEditButton = <div className="Interactive-buttonleft"
+      onClick={(e) => props.handleEditStatus(e, props.index)}>
+      <button type="submit">Text Edit</button>
+    </div>
+
+var textDisplayButton = <div className="Interactive-buttonleft"
+      onClick={(e) => props.handleEditStatus(e, props.index)}>
+      <button type="submit">Text Display</button>
+    </div>
+var deleteButton = <div className="Interactive-buttonleft"
+      onClick={(e) => props.handleDelete(e, props.index)}>
+      <button type="submit">Delete This</button>
+    </div>
+
 
   return (<div>
+
     <div className="Dynamic-Elements-Container">
-      <div style={{display: this.state.selectedButton === 'Text Display' ? 'block': 'none'}}>Edit this</div>
-      <div style={{display: this.state.selectedButton === 'Text Edit' ? 'block': 'none'}}>{textDisplay}</div>
+      {
+        props.item.edit === false
+        ? <div>{props.item.text} {textEditButton}</div>
+        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleeditChange(e, props.index)}/> {deleteButton} {textDisplayButton}</div>
+      }
+      {/*
+        <div style={{display: props.selectedButton === 'Text Display' ? 'block': 'none'}}>{textDisplay}</div>
+        <div style={{display: props.selectedButton === 'Text Edit' ? 'block': 'none'}}>Edit this</div>
+        */}
     </div>
     <div>{props.item.priority > 1 && <button onClick={props.prioritiseThis} type="submit">Increase Priority</button>}
-    </div>
-    <div>
-      <button onClick={props.editThis(props.item)} type="submit">Edit this entry</button>
     </div>
   </div>)
 };

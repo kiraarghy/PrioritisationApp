@@ -10,13 +10,16 @@ class App extends Component {
     super(props);
       this.state = {
         selectedTab: 'Text Input',
-        items: [],
-        query:"",
-        selectedButton: 'text'
+        items: JSON.parse(localStorage.getItem('items')) || [],
+        query:""
       };
 
     this.addItem = this.addItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onDisplay = this.onDisplay.bind(this);
+    this.handleeditChange = this.handleeditChange.bind(this);
+    this.handleEditStatus = this.handleEditStatus.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   addItem (e) {
@@ -29,7 +32,8 @@ class App extends Component {
     itemArray.push (
       {
           text: this.state.query,
-          priority: this.state.items.length +1
+          priority: this.state.items.length +1,
+          edit: false
       }
     );
 
@@ -40,6 +44,8 @@ class App extends Component {
     console.log(this.state.items);
     //this._inputElement.value = "";
 
+    localStorage.setItem('items', JSON.stringify(itemArray))
+
   }
 
   handleChange (e) {
@@ -48,7 +54,43 @@ class App extends Component {
     })
   }
 
+  handleeditChange (e, index) {
+    let items = this.state.items;
+    items[index] = Object.assign({}, items[index], {text: e.target.value})
 
+    this.setState({
+      items
+    })
+
+    localStorage.setItem('items', JSON.stringify(items))
+  }
+
+  handleEditStatus (e, index) {
+    let items = this.state.items;
+    items[index] = Object.assign({}, items[index], {edit: !items[index].edit})
+
+    this.setState({
+      items
+    })
+
+    localStorage.setItem('items', JSON.stringify(items))
+  }
+
+  handleDelete (e, index) {
+    this.state.items.splice(index, 1);
+
+   this.setState({
+     items: this.state.items
+   })
+
+   localStorage.setItem('items', JSON.stringify(this.state.items))
+  }
+
+  onDisplay (editOrText) {
+    this.setState({
+      selectedButton: editOrText
+    })
+  }
 
   render() {
 
@@ -115,7 +157,15 @@ class App extends Component {
           </div>
           <div className="Dynamic-Elements-Container">
             <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
-            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}><DisplayList items= {this.state.items} onPrioritise= {prioritySwap}/></div>
+            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}>
+              <DisplayList
+                items= {this.state.items}
+                handleDelete= {this.handleDelete}
+                handleEditStatus={this.handleEditStatus}
+                handleeditChange= {this.handleeditChange}
+                selectedButton= {this.state.selectedButton}
+                onDisplay= {this.onDisplay}
+                onPrioritise= {prioritySwap}/></div>
           </div>
         </div>
       </div>

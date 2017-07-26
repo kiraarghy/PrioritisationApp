@@ -35,7 +35,16 @@ const DisplayList = (props) => {
 
   var renderedSortedItems = sortedItems.map(
     (item, index) => {
-      return <DisplayListItem item={item} prioritiseThis={prioritiseThis(item, sortedItems[index-1])} editThis={editThis} key={index}/>;
+      return <DisplayListItem
+        index={index}
+        handleEditStatus= {props.handleEditStatus}
+        handleDelete= {props.handleDelete}
+        item={item} onDisplay={props.onDisplay}
+        handleeditChange= {props.handleeditChange}
+        selectedButton={props.selectedButton}
+        prioritiseThis={prioritiseThis(item, sortedItems[index-1])}
+        editThis={editThis}
+        key={index}/>;
     }
   );
 
