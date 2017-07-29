@@ -31,7 +31,7 @@ var deleteButton = <div className="Interactive-buttonleft"
       {
         props.item.edit === false
         ? <div>{props.item.text} {textEditButton}</div>
-        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleeditChange(e, props.index)}/> {deleteButton} {textDisplayButton}</div>
+        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/> {deleteButton} {textDisplayButton}</div>
       }
       {/*
         <div style={{display: props.selectedButton === 'Text Display' ? 'block': 'none'}}>{textDisplay}</div>

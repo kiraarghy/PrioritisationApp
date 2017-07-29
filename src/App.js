@@ -17,7 +17,7 @@ class App extends Component {
     this.addItem = this.addItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onDisplay = this.onDisplay.bind(this);
-    this.handleeditChange = this.handleeditChange.bind(this);
+    this.handleEditChange = this.handleEditChange.bind(this);
     this.handleEditStatus = this.handleEditStatus.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -60,7 +60,7 @@ class App extends Component {
     })
   }
 
-  handleeditChange (e, index) {
+  handleEditChange (e, index) {
     let items = this.state.items;
 
     if (e.target.value === "") {
@@ -172,7 +172,7 @@ class App extends Component {
                 items= {this.state.items}
                 handleDelete= {this.handleDelete}
                 handleEditStatus={this.handleEditStatus}
-                handleeditChange= {this.handleeditChange}
+                handleEditChange= {this.handleEditChange}
                 selectedButton= {this.state.selectedButton}
                 onDisplay= {this.onDisplay}
                 onPrioritise= {prioritySwap}/></div>

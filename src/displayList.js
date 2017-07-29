@@ -40,7 +40,7 @@ const DisplayList = (props) => {
         handleEditStatus= {props.handleEditStatus}
         handleDelete= {props.handleDelete}
         item={item} onDisplay={props.onDisplay}
-        handleeditChange= {props.handleeditChange}
+        handleEditChange= {props.handleEditChange}
         selectedButton={props.selectedButton}
         prioritiseThis={prioritiseThis(item, sortedItems[index-1])}
         editThis={editThis}
