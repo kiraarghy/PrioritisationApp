@@ -86,8 +86,8 @@ class App extends Component {
     localStorage.setItem('items', JSON.stringify(items))
   }
 
-  handleDelete (e, index) {
-    this.state.items.splice(index, 1);
+  handleDelete (e, priority) {
+    this.state.items.splice(priority, 1);
 
    this.setState({
      items: this.state.items

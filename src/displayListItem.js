@@ -20,7 +20,7 @@ var textDisplayButton = <div className="Interactive-buttonleft"
       <button type="submit">Text Display</button>
     </div>
 var deleteButton = <div className="Interactive-buttonleft"
-      onClick={(e) => props.handleDelete(e, props.index)}>
+      onClick={(e) => props.handleDelete(e, props.priority)}>
       <button type="submit">Delete This</button>
     </div>
 
