@@ -23,29 +23,35 @@ class App extends Component {
   }
 
   addItem (e) {
+
     e.preventDefault();
 
     var itemArray = this.state.items;
 
     console.log(e.target.value);
 
-    itemArray.push (
-      {
-          text: this.state.query,
-          priority: this.state.items.length +1,
-          edit: false
-      }
-    );
+    if (this.state.query === "") {
+      alert("Please enter an item")
+    }
 
-    this.setState({
-      items: itemArray
-    });
+    else{
+      itemArray.push (
+        {
+            text: this.state.query,
+            priority: this.state.items.length +1,
+            edit: false
+        }
+      );
 
-    console.log(this.state.items);
-    //this._inputElement.value = "";
+      this.setState({
+        items: itemArray
+      });
 
-    localStorage.setItem('items', JSON.stringify(itemArray))
+      console.log(this.state.items);
+      //this._inputElement.value = "";
 
+      localStorage.setItem('items', JSON.stringify(itemArray))
+    }
   }
 
   handleChange (e) {
