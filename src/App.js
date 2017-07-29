@@ -62,8 +62,12 @@ class App extends Component {
 
   handleeditChange (e, index) {
     let items = this.state.items;
-    items[index] = Object.assign({}, items[index], {text: e.target.value})
 
+    if (e.target.value === "") {
+      alert("Please do not enter empty values")
+    }
+
+    items[index] = Object.assign({}, items[index], {text: e.target.value})
     this.setState({
       items
     })
