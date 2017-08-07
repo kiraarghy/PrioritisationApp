@@ -60,14 +60,14 @@ class App extends Component {
     })
   }
 
-  handleEditChange (e, index) {
+  handleEditChange (e, priority) {
     let items = this.state.items;
 
     if (e.target.value === "") {
       alert("Please do not enter empty values")
     }
 
-    items[index] = Object.assign({}, items[index], {text: e.target.value})
+    items[priority] = Object.assign({}, items[priority], {text: e.target.value})
     this.setState({
       items
     })
@@ -75,9 +75,9 @@ class App extends Component {
     localStorage.setItem('items', JSON.stringify(items))
   }
 
-  handleEditStatus (e, index) {
+  handleEditStatus (e, priority) {
     let items = this.state.items;
-    items[index] = Object.assign({}, items[index], {edit: !items[index].edit})
+    items[priority] = Object.assign({}, items[priority], {edit: !items[priority].edit})
 
     this.setState({
       items
@@ -86,8 +86,8 @@ class App extends Component {
     localStorage.setItem('items', JSON.stringify(items))
   }
 
-  handleDelete (e, index) {
-    this.state.items.splice(index, 1);
+  handleDelete (e, priority) {
+    this.state.items.splice(priority, 1);
 
    this.setState({
      items: this.state.items
@@ -175,7 +175,8 @@ class App extends Component {
                 handleEditChange= {this.handleEditChange}
                 selectedButton= {this.state.selectedButton}
                 onDisplay= {this.onDisplay}
-                onPrioritise= {prioritySwap}/></div>
+                onPrioritise= {prioritySwap}/>
+              </div>
           </div>
         </div>
       </div>
