@@ -26,11 +26,6 @@ class DisplayList extends React.Component {
       return (x);
     }).sort(function(a,b) {return (a.index > b.index) ? 1 : ((b.index > a.index) ? -1: 0);});
 
-    var prioritiseThis = (item, item2) => {
-      return () =>
-      this.props.onPrioritise(item.id, item2.id);
-    };
-
     var editThis = (item) => {
       return () => console.log(item);
     };

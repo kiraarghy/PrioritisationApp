@@ -6,10 +6,6 @@ console.log("displayListItem loaded");
 
 const DisplayListItem = (props) => {
 
-
-
-var textDisplay = <span>{props.item.text}</span>
-
 var textEditButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleEditStatus(e, props.index)}>
       <button type="submit">Text Edit</button>
