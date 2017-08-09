@@ -18,6 +18,13 @@ class List extends Component {
               </input>
               <button type="submit">add</button>
             </form>
+            <form onSubmit={this.props.addDate}>
+              <input ref={(a) => this._inputElement = a}
+                onChange = {this.props.handleDate}
+                placeholder="00/00/0000">
+              </input>
+              <button type="submit">add</button>
+            </form>
           </div>
         </div>
       </div>

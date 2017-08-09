@@ -11,15 +11,18 @@ class App extends Component {
       this.state = {
         selectedTab: 'Text Input',
         items: JSON.parse(localStorage.getItem('items')) || [],
-        query:""
+        query:"",
+        date:""
       };
 
     this.addItem = this.addItem.bind(this);
+    this.addDate = this.addDate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onDisplay = this.onDisplay.bind(this);
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleEditStatus = this.handleEditStatus.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
 
   addItem (e) {
@@ -53,15 +56,47 @@ class App extends Component {
     }
   }
 
+  addDate (e) {
+
+    e.preventDefault();
+
+    var itemArray = this.state.items;
+
+    console.log(e.target.value);
+
+    if (!e.target.value.match(/\d{0,2}\/\d{0,2}\/\d{0,2}/)) {
+      alert("Please enter a date");
+    }
+
+    else{
+      itemArray.push (
+        {
+            date: this.state.query
+        }
+      );
+
+      this.setState({
+        items: itemArray
+      });
+
+      console.log(this.state.items);
+      //this._inputElement.value = "";
+
+      localStorage.setItem('items', JSON.stringify(itemArray))
+    }
+  }
+
   handleChange (e) {
     this.setState({
       query: e.target.value
     })
   }
 
-
-
-
+  handleDate (e) {
+    this.setState({
+      date: e.target.value
+    })
+  }
 
   handleEditChange (e, index) {
     let items = this.state.items;
@@ -159,7 +194,7 @@ class App extends Component {
             </div>
           </div>
           <div className="Dynamic-Elements-Container">
-            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} addItem = {this.addItem}/></div>
+            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} handleDate = {this.handleDate} addItem = {this.addItem}/></div>
             <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}>
               <DisplayList
                 items= {this.state.items}
