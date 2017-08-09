@@ -55,6 +55,7 @@ class DisplayList extends React.Component {
           handleDelete= {this.props.handleDelete}
           item={item} onDisplay={this.props.onDisplay}
           handleEditChange= {this.props.handleEditChange}
+          handleEditDate= {this.props.handleEditDate}
           selectedButton={this.props.selectedButton}
           prioritiseThis={swapArray(this.props.items, index, index-1)}
           editThis={editThis}

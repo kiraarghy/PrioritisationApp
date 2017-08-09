@@ -26,8 +26,11 @@ var deleteButton = <div className="Interactive-buttonleft"
     <div className="Dynamic-Elements-Container">
       {
         props.item.edit === false
-        ? <div>{props.item.text} {textEditButton}</div>
-        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/> {deleteButton} {textDisplayButton}</div>
+        ? <div><div>title: {props.item.text}</div> <div>date: {props.item.date}</div>{textEditButton}</div>
+        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/>
+        <input value= {props.item.date} type= "text" onChange = {(e)=> props.handleEditDate(e, props.index)}/>
+        {deleteButton}
+        {textDisplayButton}</div>
       }
     </div>
     <div>{props.index > 0 && <button onClick={props.prioritiseThis} type="submit">Increase Priority</button>}

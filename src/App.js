@@ -16,13 +16,12 @@ class App extends Component {
       };
 
     this.addItem = this.addItem.bind(this);
-    this.addDate = this.addDate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onDisplay = this.onDisplay.bind(this);
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleEditStatus = this.handleEditStatus.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleDate = this.handleDate.bind(this);
+    this.handleEditDate = this.handleEditDate.bind(this);
   }
 
   addItem (e) {
@@ -41,37 +40,8 @@ class App extends Component {
       itemArray.push (
         {
             text: this.state.query,
-            edit: false
-        }
-      );
-
-      this.setState({
-        items: itemArray
-      });
-
-      console.log(this.state.items);
-      //this._inputElement.value = "";
-
-      localStorage.setItem('items', JSON.stringify(itemArray))
-    }
-  }
-
-  addDate (e) {
-
-    e.preventDefault();
-
-    var itemArray = this.state.items;
-
-    console.log(e.target.value);
-
-    if (!e.target.value.match(/\d{0,2}\/\d{0,2}\/\d{0,2}/)) {
-      alert("Please enter a date");
-    }
-
-    else{
-      itemArray.push (
-        {
-            date: this.state.query
+            edit: false,
+            date: "00/00/00"
         }
       );
 
@@ -112,6 +82,24 @@ class App extends Component {
 
     localStorage.setItem('items', JSON.stringify(items))
   }
+
+  handleEditDate (e, index) {
+
+    let items = this.state.items;
+
+    if (!e.target.value.match(/\d{0,2}\/\d{0,2}\/\d{0,2}/)) {
+      alert("Please enter a date");
+    }
+
+    items[index] = Object.assign({}, items[index], {date: e.target.value})
+
+    this.setState({
+      items
+    })
+
+    localStorage.setItem('items', JSON.stringify(items))
+  }
+
 
   handleEditStatus (e, index) {
     let items = this.state.items;
@@ -201,6 +189,7 @@ class App extends Component {
                 handleDelete= {this.handleDelete}
                 handleEditStatus={this.handleEditStatus}
                 handleEditChange= {this.handleEditChange}
+                handleEditDate= {this.handleEditDate}
                 selectedButton= {this.state.selectedButton}
                 onDisplay= {this.onDisplay}
                 swapArray= {this.swapIndices}/>
