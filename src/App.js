@@ -38,7 +38,6 @@ class App extends Component {
       itemArray.push (
         {
             text: this.state.query,
-            priority: this.state.items.length +1,
             edit: false
         }
       );
@@ -60,14 +59,18 @@ class App extends Component {
     })
   }
 
-  handleEditChange (e, priority) {
+
+
+
+
+  handleEditChange (e, index) {
     let items = this.state.items;
 
     if (e.target.value === "") {
       alert("Please do not enter empty values")
     }
 
-    items[priority] = Object.assign({}, items[priority], {text: e.target.value})
+    items[index] = Object.assign({}, items[index], {text: e.target.value})
     this.setState({
       items
     })
@@ -75,9 +78,9 @@ class App extends Component {
     localStorage.setItem('items', JSON.stringify(items))
   }
 
-  handleEditStatus (e, priority) {
+  handleEditStatus (e, index) {
     let items = this.state.items;
-    items[priority] = Object.assign({}, items[priority], {edit: !items[priority].edit})
+    items[index] = Object.assign({}, items[index], {edit: !items[index].edit})
 
     this.setState({
       items
@@ -86,10 +89,11 @@ class App extends Component {
     localStorage.setItem('items', JSON.stringify(items))
   }
 
-  handleDelete (e, priority) {
-    this.state.items.splice(priority, 1);
+  handleDelete (e, index) {
 
-   this.setState({
+  this.state.items.splice(index, 1);
+
+  this.setState({
      items: this.state.items
    })
 
@@ -114,17 +118,6 @@ class App extends Component {
         this.setState({
           items: sortItems
         });
-    }
-
-    var prioritySwap = (id1, id2) => {
-        var prioritySwapped = this.state.items;
-        var priority1 = prioritySwapped[id1].priority;
-        var priority2 = prioritySwapped[id2].priority;
-        prioritySwapped[id1].priority = priority2;
-        prioritySwapped[id2].priority = priority1;
-        this.setState({
-          items: prioritySwapped
-        })
     }
 
 
@@ -175,7 +168,7 @@ class App extends Component {
                 handleEditChange= {this.handleEditChange}
                 selectedButton= {this.state.selectedButton}
                 onDisplay= {this.onDisplay}
-                onPrioritise= {prioritySwap}/>
+                swapArray= {this.swapIndices}/>
               </div>
           </div>
         </div>

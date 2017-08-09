@@ -33,12 +33,8 @@ var deleteButton = <div className="Interactive-buttonleft"
         ? <div>{props.item.text} {textEditButton}</div>
         : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/> {deleteButton} {textDisplayButton}</div>
       }
-      {/*
-        <div style={{display: props.selectedButton === 'Text Display' ? 'block': 'none'}}>{textDisplay}</div>
-        <div style={{display: props.selectedButton === 'Text Edit' ? 'block': 'none'}}>Edit this</div>
-        */}
     </div>
-    <div>{props.item.priority > 1 && <button onClick={props.prioritiseThis} type="submit">Increase Priority</button>}
+    <div>{props.index > 0 && <button onClick={props.prioritiseThis} type="submit">Increase Priority</button>}
     </div>
   </div>)
 };
@@ -48,5 +44,3 @@ DisplayListItem.propTypes = {
 }
 
 export default DisplayListItem;
-
-    //
