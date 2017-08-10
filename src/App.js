@@ -41,7 +41,8 @@ class App extends Component {
         {
             text: this.state.query,
             edit: false,
-            date: "00/00/00"
+            date: "00/00/00",
+            color: "white"
         }
       );
 
@@ -135,14 +136,6 @@ class App extends Component {
       return () => {this.setState({selectedTab: Tab})}
     }
 
-    var ArraySort = () => {
-        var sortItems = this.state.items;
-        sortItems.sort(function(a,b) {return (a.text > b.text) ? 1 : ((b.text > a.text) ? -1 : 0); });
-        this.setState({
-          items: sortItems
-        });
-    }
-
 
     // var countSort = () => {
     //     var sortItems = this.state.items;
@@ -176,9 +169,6 @@ class App extends Component {
             <div className="Interactive-buttonleft"
               onClick={onClickGenerator('Display List')}>
               <h1 className ="Cool-Styling">List</h1>
-            </div>
-            <div className="Interactive-buttonleft" onClick={ArraySort}>
-              <h1 className ="Cool-Styling">Sort</h1>
             </div>
           </div>
           <div className="Dynamic-Elements-Container">
