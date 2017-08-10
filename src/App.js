@@ -12,7 +12,8 @@ class App extends Component {
         selectedTab: 'Text Input',
         items: JSON.parse(localStorage.getItem('items')) || [],
         query:"",
-        date:""
+        date:"",
+        dateCreated: ""
       };
 
     this.addItem = this.addItem.bind(this);
@@ -37,12 +38,26 @@ class App extends Component {
     }
 
     else{
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+          dd='0'+dd;
+        }
+        if(mm<10){
+          mm='0'+mm;
+        }
+        var today = dd+'/'+mm+'/'+yyyy;
+
       itemArray.push (
         {
             text: this.state.query,
             edit: false,
             date: "00/00/00",
-            color: "white"
+            color: "white",
+            dateCreated: today
         }
       );
 

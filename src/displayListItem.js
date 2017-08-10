@@ -15,7 +15,7 @@ var textDisplayButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleEditStatus(e, props.index)}>
       <button type="submit">Text Display</button>
     </div>
-    
+
 var deleteButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleDelete(e, props.index)}>
       <button type="submit">Delete This</button>
@@ -30,11 +30,18 @@ var dateColor = {
     <div className="Dynamic-Elements-Container">
       {
         props.item.edit === false
-        ? <div><div style= {dateColor}>title: {props.item.text}</div> {props.item.date !== "00/00/00" ? <div>date: {props.item.date}</div> : ""} {textEditButton} </div>
-        : <div><input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/>
-        <input value= {props.item.date} type= "text" onChange = {(e)=> props.handleEditDate(e, props.index)}/>
-        {deleteButton}
-        {textDisplayButton}</div>
+        ? <div>
+            <div style= {dateColor}>Title of task: {props.item.text}</div>
+            {props.item.date !== "00/00/00" ? <div>Completion date for task: {props.item.date}</div> : ""}
+            <div>Date task created on: {props.item.dateCreated}</div> {textEditButton} </div>
+        : <div>
+            <div>Change task title here: <input value= {props.item.text} type= "text" onChange = {(e)=> props.handleEditChange(e, props.index)}/></div>
+            <div>Change completion date here:<input value= {props.item.date} type= "text" onChange = {(e)=> props.handleEditDate(e, props.index)}/></div>
+            <div>
+              {deleteButton}
+              {textDisplayButton}
+            </div>
+      </div>
       }
     </div>
     <div>{props.index > 0 && <button onClick={props.prioritiseThis} type="submit">Increase Priority</button>}
