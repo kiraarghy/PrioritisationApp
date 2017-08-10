@@ -8,17 +8,17 @@ const DisplayListItem = (props) => {
 
 var textEditButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleEditStatus(e, props.index)}>
-      <button type="submit">Text Edit</button>
+      <button type="submit">Edit Task</button>
     </div>
 
 var textDisplayButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleEditStatus(e, props.index)}>
-      <button type="submit">Text Display</button>
+      <button type="submit">Finish Edit</button>
     </div>
 
 var deleteButton = <div className="Interactive-buttonleft"
       onClick={(e) => props.handleDelete(e, props.index)}>
-      <button type="submit">Delete This</button>
+      <button type="submit">Delete This Task</button>
     </div>
 
 var dateColor = {
