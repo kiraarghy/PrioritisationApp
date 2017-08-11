@@ -23,6 +23,7 @@ class App extends Component {
     this.handleEditStatus = this.handleEditStatus.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEditDate = this.handleEditDate.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   addItem (e) {
@@ -30,8 +31,6 @@ class App extends Component {
     e.preventDefault();
 
     var itemArray = this.state.items;
-
-    console.log(e.target.value);
 
     if (this.state.query === "") {
       alert("Please enter an item")
@@ -62,11 +61,9 @@ class App extends Component {
       );
 
       this.setState({
-        items: itemArray
+        items: itemArray,
+        query: ""
       });
-
-      console.log(this.state.items);
-      //this._inputElement.value = "";
 
       localStorage.setItem('items', JSON.stringify(itemArray))
     }
@@ -76,6 +73,12 @@ class App extends Component {
     this.setState({
       query: e.target.value
     })
+    console.log(this.state.query)
+  }
+
+  handleReset () {
+
+    alert("handleReset triggered")
   }
 
   handleDate (e) {
@@ -197,7 +200,9 @@ class App extends Component {
                 handleEditDate= {this.handleEditDate}
                 selectedButton= {this.state.selectedButton}
                 onDisplay= {this.onDisplay}
-                swapArray= {this.swapIndices}/>
+                swapArray= {this.swapIndices}
+                query={this.state.query}
+                handleReset= {this.handleReset}/>
               </div>
           </div>
         </div>

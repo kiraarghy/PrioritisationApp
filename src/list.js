@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 
 class List extends Component {
 
-//bug don't allow empty fields
+constructor(props) {
+    super(props);
+this.handleClick = this.handleClick.bind(this);
+}
+
+handleClick = () => {
+ this.form.value="";
+}
 
   render () {
     return (
@@ -12,11 +19,11 @@ class List extends Component {
         <div className="todoListMain">
           <div className="header">
             <form onSubmit={this.props.addItem}>
-              <input ref={(a) => this._inputElement = a}
+              <input ref={(a) => this.form = a}
                 onChange = {this.props.handleChange}
                 placeholder="enter task">
               </input>
-              <button type="submit">add</button>
+              <button type="submit" onClick={this.handleClick}>add</button>
             </form>
           </div>
         </div>
