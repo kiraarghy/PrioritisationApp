@@ -9,8 +9,10 @@ constructor(props) {
 this.handleClick = this.handleClick.bind(this);
 }
 
-handleClick = () => {
+handleClick () {
+  this.props.returnToTab();  
  this.form.value="";
+
 }
 
   render () {

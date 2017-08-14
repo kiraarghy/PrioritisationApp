@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        selectedTab: 'Text Input',
+        selectedTab: 'Display List',
         items: JSON.parse(localStorage.getItem('items')) || [],
         query:"",
         date:"",
@@ -63,10 +63,12 @@ class App extends Component {
       this.setState({
         items: itemArray,
         query: ""
+
       });
 
       localStorage.setItem('items', JSON.stringify(itemArray))
     }
+
   }
 
   handleChange (e) {
@@ -154,26 +156,9 @@ class App extends Component {
       return () => {this.setState({selectedTab: Tab})}
     }
 
-
-    // var countSort = () => {
-    //     var sortItems = this.state.items;
-    //     sortItems.sort(function(a,b) {return (a.count > b.count) ? 1 : ((b.count > a.count) ? -1 : 0); });
-    //     this.setState({
-    //       items: sortItems
-    //     });
-    // }
-
-    // var increaseCount = (a) => {
-    //   var increasedCount = this.state.items;
-    //   console.log(this.state.items.count[a]);
-    // }
-// //not gonna work because adding plus 1 to i will just cause it to become that?
-//     var Increase = () => {
-//       var increaseCount = this.state.items;
-//       console.log(items);
-//       return () => {this.setState({ count: this.state.items.count[i-1] +5})}
-//       console.log(items);
-//     }
+    var returnToTab = () => {
+      return () => {this.setState({selectedTab: 'Display List'})}
+    }
 
 
     return (
@@ -190,7 +175,23 @@ class App extends Component {
             </div>
           </div>
           <div className="Dynamic-Elements-Container">
-            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}><List handleChange= {this.handleChange} handleDate = {this.handleDate} addItem = {this.addItem}/></div>
+            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}>
+              <List handleChange= {this.handleChange}
+              handleDate = {this.handleDate}
+              addItem = {this.addItem}
+              returnToTab = {()=>this.setState({selectedTab: 'Display List'})}/>
+              <DisplayList
+              items= {this.state.items}
+              handleDelete= {this.handleDelete}
+              handleEditStatus={this.handleEditStatus}
+              handleEditChange= {this.handleEditChange}
+              handleEditDate= {this.handleEditDate}
+              selectedButton= {this.state.selectedButton}
+              onDisplay= {this.onDisplay}
+              swapArray= {this.swapIndices}
+              query={this.state.query}
+              handleReset= {this.handleReset}/>
+            </div>
             <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}>
               <DisplayList
                 items= {this.state.items}
