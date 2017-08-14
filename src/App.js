@@ -6,6 +6,8 @@ import List from './list.js';
 
 class App extends Component {
 
+//On refresh, the app pulls the items from localStorage and pushes to state. A number of other defaults are written here.
+
   constructor(props) {
     super(props);
       this.state = {
@@ -26,6 +28,15 @@ class App extends Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
+  //addItem triggered within list.js by form onSubmit. Simple data verification to ensure not empty, though this needs proper data
+  //verification at a later date [regex]
+
+  //This function adds to array itemArray text: from list.js input, edit [used in displayListItem], date is default 00/00/00
+  //this can be edited at a later date by the user, color is set to white by default intention is to write a function which compares today's date
+  //to that of date and will change color, date created is created from today.
+
+  //addItem then writes the array itemArray to this.state.items
+  
   addItem (e) {
 
     e.preventDefault();

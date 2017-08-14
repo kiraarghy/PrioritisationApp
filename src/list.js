@@ -9,11 +9,18 @@ constructor(props) {
 this.handleClick = this.handleClick.bind(this);
 }
 
-handleClick () {
-  this.props.returnToTab();  
- this.form.value="";
+//handleClick resets the input form, and resets the displayed tab to display list
 
+handleClick () {
+  this.props.returnToTab();
+ this.form.value="";
 }
+
+//Form is linked to handleChange, updates the query variable. onSubmit this pushes the query to state as a new item object.
+
+//Button triggers onSubmit and onClick triggers handleClick
+
+//All the data verification occurs in App.js
 
   render () {
     return (
