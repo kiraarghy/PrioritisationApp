@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import './App.css';
-import DisplayList from './displayList.js';
-import List from './list.js';
-
+import React, { Component } from "react";
+import "./App.css";
+import DisplayList from "./displayList.js";
+import List from "./list.js";
+import "react-dates/lib/css/_datepicker.css";
 
 class App extends Component {
-
-//On refresh, the app pulls the items from localStorage and pushes to state. A number of other defaults are written here.
+  //On refresh, the app pulls the items from localStorage and pushes to state. A number of other defaults are written here.
 
   constructor(props) {
     super(props);
-      this.state = {
-        selectedTab: 'Display List',
-        items: JSON.parse(localStorage.getItem('items')) || [],
-        query:"",
-        date:"",
-        dateCreated: ""
-      };
+    this.state = {
+      selectedTab: "Display List",
+      items: JSON.parse(localStorage.getItem("items")) || [],
+      query: "",
+      date: "",
+      dateCreated: "",
+      focusedInput: ""
+    };
 
     this.addItem = this.addItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -36,186 +36,194 @@ class App extends Component {
   //to that of date and will change color, date created is created from today.
 
   //addItem then writes the array itemArray to this.state.items
-  
-  addItem (e) {
 
+  addItem(e) {
     e.preventDefault();
 
     var itemArray = this.state.items;
 
     if (this.state.query === "") {
-      alert("Please enter an item")
-    }
+      alert("Please enter an item");
+    } else {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1; //January is 0!
+      var yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      var todays = dd + "/" + mm + "/" + yyyy;
 
-    else{
-
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-        if(dd<10){
-          dd='0'+dd;
-        }
-        if(mm<10){
-          mm='0'+mm;
-        }
-        var today = dd+'/'+mm+'/'+yyyy;
-
-      itemArray.push (
-        {
-            text: this.state.query,
-            edit: false,
-            date: "00/00/00",
-            color: "white",
-            dateCreated: today
-        }
-      );
+      itemArray.push({
+        text: this.state.query,
+        edit: false,
+        endDate: null,
+        startDate: null,
+        color: "white",
+        dateCreated: todays
+      });
 
       this.setState({
         items: itemArray,
         query: ""
-
       });
 
-      localStorage.setItem('items', JSON.stringify(itemArray))
+      localStorage.setItem("items", JSON.stringify(itemArray));
     }
-
   }
 
-  handleChange (e) {
+  onDatesChange(startDate, endDate) {
+    this.setState({ startDate, endDate });
+  }
+
+  handleChange(e) {
     this.setState({
       query: e.target.value
-    })
-    console.log(this.state.query)
+    });
+    console.log(this.state.query);
   }
 
-  handleReset () {
-
-    alert("handleReset triggered")
+  handleReset() {
+    alert("handleReset triggered");
   }
 
-  handleDate (e) {
+  handleDate(e) {
     this.setState({
       date: e.target.value
-    })
+    });
   }
 
-  handleEditChange (e, index) {
+  handleEditChange(e, index) {
     let items = this.state.items;
 
     if (e.target.value === "") {
-      alert("Please do not enter empty values")
+      alert("Please do not enter empty values");
     }
 
-    items[index] = Object.assign({}, items[index], {text: e.target.value})
+    items[index] = Object.assign({}, items[index], { text: e.target.value });
     this.setState({
       items
-    })
+    });
 
-    localStorage.setItem('items', JSON.stringify(items))
+    localStorage.setItem("items", JSON.stringify(items));
   }
 
-  handleEditDate (e, index) {
-
+  handleEditDate(e, index) {
     let items = this.state.items;
 
-    if (!e.target.value.match(/\d{0,2}\/\d{0,2}\/\d{0,2}/)) {
-      alert("Please enter a date");
-    }
-
-    items[index] = Object.assign({}, items[index], {date: e.target.value})
+    items[index] = Object.assign({}, items[index], {
+      startDate: e.target.value
+    });
 
     this.setState({
       items
-    })
+    });
 
-    localStorage.setItem('items', JSON.stringify(items))
+    localStorage.setItem("items", JSON.stringify(items));
   }
 
-
-  handleEditStatus (e, index) {
+  handleEditStatus(e, index) {
     let items = this.state.items;
-    items[index] = Object.assign({}, items[index], {edit: !items[index].edit})
+    items[index] = Object.assign({}, items[index], {
+      edit: !items[index].edit
+    });
 
     this.setState({
       items
-    })
+    });
 
-    localStorage.setItem('items', JSON.stringify(items))
+    localStorage.setItem("items", JSON.stringify(items));
   }
 
-  handleDelete (e, index) {
+  handleDelete(e, index) {
+    this.state.items.splice(index, 1);
 
-  this.state.items.splice(index, 1);
+    this.setState({
+      items: this.state.items
+    });
 
-  this.setState({
-     items: this.state.items
-   })
-
-   localStorage.setItem('items', JSON.stringify(this.state.items))
+    localStorage.setItem("items", JSON.stringify(this.state.items));
   }
 
-  onDisplay (editOrText) {
+  onDisplay(editOrText) {
     this.setState({
       selectedButton: editOrText
-    })
+    });
   }
 
   render() {
-
-    var onClickGenerator = (Tab) => {
-      return () => {this.setState({selectedTab: Tab})}
-    }
-
-    var returnToTab = () => {
-      return () => {this.setState({selectedTab: 'Display List'})}
-    }
-
+    var onClickGenerator = Tab => {
+      return () => {
+        this.setState({ selectedTab: Tab });
+      };
+    };
 
     return (
       <div className="App">
         <div className="App-header">
-          <div className ="container-buttons">
-            <div className="Interactive-buttonleft"
-              onClick={onClickGenerator('Text Input')}>
-              <h1 className ="Cool-Styling">Input</h1>
+          <div className="container-buttons">
+            <div
+              className="Interactive-buttonleft"
+              onClick={onClickGenerator("Text Input")}
+            >
+              <h1 className="Cool-Styling">Input</h1>
             </div>
-            <div className="Interactive-buttonleft"
-              onClick={onClickGenerator('Display List')}>
-              <h1 className ="Cool-Styling">List</h1>
+            <div
+              className="Interactive-buttonleft"
+              onClick={onClickGenerator("Display List")}
+            >
+              <h1 className="Cool-Styling">List</h1>
             </div>
           </div>
           <div className="Dynamic-Elements-Container">
-            <div style={{display: this.state.selectedTab === 'Text Input' ? 'block': 'none'}}>
-              <List handleChange= {this.handleChange}
-              handleDate = {this.handleDate}
-              addItem = {this.addItem}
-              returnToTab = {()=>this.setState({selectedTab: 'Display List'})}/>
+            <div
+              style={{
+                display:
+                  this.state.selectedTab === "Text Input" ? "block" : "none"
+              }}
+            >
+              <List
+                handleChange={this.handleChange}
+                handleDate={this.handleDate}
+                addItem={this.addItem}
+                returnToTab={() =>
+                  this.setState({ selectedTab: "Display List" })}
+              />
               <DisplayList
-              items= {this.state.items}
-              handleDelete= {this.handleDelete}
-              handleEditStatus={this.handleEditStatus}
-              handleEditChange= {this.handleEditChange}
-              handleEditDate= {this.handleEditDate}
-              selectedButton= {this.state.selectedButton}
-              onDisplay= {this.onDisplay}
-              swapArray= {this.swapIndices}
-              query={this.state.query}
-              handleReset= {this.handleReset}/>
-            </div>
-            <div style={{display: this.state.selectedTab === 'Display List' ? 'block': 'none'}}>
-              <DisplayList
-                items= {this.state.items}
-                handleDelete= {this.handleDelete}
+                items={this.state.items}
+                handleDelete={this.handleDelete}
                 handleEditStatus={this.handleEditStatus}
-                handleEditChange= {this.handleEditChange}
-                handleEditDate= {this.handleEditDate}
-                selectedButton= {this.state.selectedButton}
-                onDisplay= {this.onDisplay}
-                swapArray= {this.swapIndices}
+                handleEditChange={this.handleEditChange}
+                handleEditDate={this.handleEditDate}
+                selectedButton={this.state.selectedButton}
+                onDisplay={this.onDisplay}
+                swapArray={this.swapIndices}
                 query={this.state.query}
-                handleReset= {this.handleReset}/>
-              </div>
+                handleReset={this.handleReset}
+              />
+            </div>
+            <div
+              style={{
+                display:
+                  this.state.selectedTab === "Display List" ? "block" : "none"
+              }}
+            >
+              <DisplayList
+                items={this.state.items}
+                handleDelete={this.handleDelete}
+                handleEditStatus={this.handleEditStatus}
+                handleEditChange={this.handleEditChange}
+                handleEditDate={this.handleEditDate}
+                selectedButton={this.state.selectedButton}
+                onDisplay={this.onDisplay}
+                swapArray={this.swapIndices}
+                query={this.state.query}
+                handleReset={this.handleReset}
+              />
+            </div>
           </div>
         </div>
       </div>

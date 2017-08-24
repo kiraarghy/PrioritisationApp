@@ -21,12 +21,12 @@
 .Interactive-buttonright {
   margin: auto;
   width: 60%;
-  border: 3px solid #73AD21;
+  border: 3px solid #73ad21;
   padding: 2px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   float: right;
   width: 300px;
-  border: 3px solid #73AD21;
+  border: 3px solid #73ad21;
   padding: 10px;
 }
 
@@ -41,30 +41,33 @@
   height: 10%;
   padding: 2%;
   margin: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .Cool-Styling {
   font-size: 2vW;
-  color: #000000
+  color: #000000;
 }
 
 .Box {
   width: 20%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #000000;
 }
 
 .Interactive-buttonright:hover {
-  background-color: #A9A9A9;
+  background-color: #a9a9a9;
 }
 
 .Interactive-buttonleft:hover {
-  background-color: #A9A9A9;
+  background-color: #a9a9a9;
 }
 
-
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

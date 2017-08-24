@@ -4,8 +4,14 @@
   "private": true,
   "homepage": "http://shtekhler.github.io/PrioritisationApp",
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-addons-shallow-compare": "^15.6.0",
+    "react-daterange-picker": "^1.1.0",
+    "react-dates": "^12.5.0",
+    "react-dom": "^15.6.1",
+    "webpack": "^3.5.5"
   },
   "devDependencies": {
     "gh-pages": "^1.0.0",

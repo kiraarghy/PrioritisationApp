@@ -59,7 +59,8 @@ class DisplayList extends React.Component {
           selectedButton={this.props.selectedButton}
           prioritiseThis={swapArray(this.props.items, index, index-1)}
           editThis={editThis}
-          key={index}/>;
+          key={index}
+        />;
       }
     );
 
