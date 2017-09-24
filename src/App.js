@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "react-dates/lib/css/_datepicker.css";
-import MaterialIcon from 'react-google-material-icons'
+import MaterialIcon from "react-google-material-icons";
 
 import "./App.css";
 import DisplayList from "./displayList.js";
@@ -78,15 +78,10 @@ class App extends Component {
     }
   }
 
-  onDatesChange(startDate, endDate) {
-    this.setState({ startDate, endDate });
-  }
-
   handleChange(e) {
     this.setState({
       query: e.target.value
     });
-    console.log(this.state.query);
   }
 
   handleReset() {
@@ -120,7 +115,7 @@ class App extends Component {
     });
 
     localStorage.setItem("items", JSON.stringify(items));
-  }
+  };
 
   handleEditStartDate = (e, index) => {
     let items = this.state.items;
@@ -134,7 +129,7 @@ class App extends Component {
     });
 
     localStorage.setItem("items", JSON.stringify(items));
-  }
+  };
 
   handleEditStatus(e, index) {
     let items = this.state.items;
@@ -167,6 +162,9 @@ class App extends Component {
 
   render() {
     var onClickGenerator = Tab => {
+      if (this.state.selectedTab === "Text Input") {
+        return () => this.setState({ selectedTab: "Display List" });
+      }
       return () => {
         this.setState({ selectedTab: Tab });
       };
@@ -176,62 +174,64 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h1>Prioritisation Application</h1>
-          </div>
+        </div>
 
-          <div onClick={onClickGenerator("Text Input")}>
-              <MaterialIcon icon="add_circle" size={36}/>
+        <div onClick={onClickGenerator("Text Input")}>
+          <MaterialIcon icon="add_circle" size={36} />
+        </div>
+        <div>
+          <div
+            style={{
+              display:
+                this.state.selectedTab === "Text Input"
+                  ? "inline-block"
+                  : "none"
+            }}
+          >
+            <List
+              handleChange={this.handleChange}
+              handleDate={this.handleDate}
+              addItem={this.addItem}
+              returnToTab={() => this.setState({ selectedTab: "Display List" })}
+            />
+            <DisplayList
+              items={this.state.items}
+              handleDelete={this.handleDelete}
+              handleEditStatus={this.handleEditStatus}
+              handleEditChange={this.handleEditChange}
+              handleEditEndDate={this.handleEditEndDate}
+              handleEditStartDate={this.handleEditStartDate}
+              selectedButton={this.state.selectedButton}
+              onDisplay={this.onDisplay}
+              swapArray={this.swapIndices}
+              query={this.state.query}
+              handleReset={this.handleReset}
+            />
           </div>
-          <div>
-            <div
-              style={{
-                display:
-                  this.state.selectedTab === "Text Input" ? "inline-block" : "none"
-              }}
-            >
-              <List
-                handleChange={this.handleChange}
-                handleDate={this.handleDate}
-                addItem={this.addItem}
-                returnToTab={() =>
-                  this.setState({ selectedTab: "Display List" })}
-              />
-              <DisplayList
-                items={this.state.items}
-                handleDelete={this.handleDelete}
-                handleEditStatus={this.handleEditStatus}
-                handleEditChange={this.handleEditChange}
-                handleEditEndDate={this.handleEditEndDate}
-                handleEditStartDate={this.handleEditStartDate}
-                selectedButton={this.state.selectedButton}
-                onDisplay={this.onDisplay}
-                swapArray={this.swapIndices}
-                query={this.state.query}
-                handleReset={this.handleReset}
-              />
-            </div>
-            <div
-              style={{
-                display:
-                  this.state.selectedTab === "Display List" ? "inline-block" : "none"
-              }}
-            >
-              <DisplayList
-                items={this.state.items}
-                handleDelete={this.handleDelete}
-                handleEditStatus={this.handleEditStatus}
-                handleEditChange={this.handleEditChange}
-                handleEditEndDate={this.handleEditEndDate}
-                selectedButton={this.state.selectedButton}
-                onDisplay={this.onDisplay}
-                swapArray={this.swapIndices}
-                query={this.state.query}
-                handleReset={this.handleReset}
-                handleEditStartDate={this.handleEditStartDate}
-              />
-            </div>
+          <div
+            style={{
+              display:
+                this.state.selectedTab === "Display List"
+                  ? "inline-block"
+                  : "none"
+            }}
+          >
+            <DisplayList
+              items={this.state.items}
+              handleDelete={this.handleDelete}
+              handleEditStatus={this.handleEditStatus}
+              handleEditChange={this.handleEditChange}
+              handleEditEndDate={this.handleEditEndDate}
+              selectedButton={this.state.selectedButton}
+              onDisplay={this.onDisplay}
+              swapArray={this.swapIndices}
+              query={this.state.query}
+              handleReset={this.handleReset}
+              handleEditStartDate={this.handleEditStartDate}
+            />
           </div>
         </div>
-      
+      </div>
     );
   }
 }
