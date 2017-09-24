@@ -11,6 +11,7 @@
     "react-daterange-picker": "^1.1.0",
     "react-dates": "^12.5.0",
     "react-dom": "^15.6.1",
+    "react-google-material-icons": "^1.0.3",
     "webpack": "^3.5.5"
   },
   "devDependencies": {
