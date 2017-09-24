@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import "react-dates/lib/css/_datepicker.css";
+import MaterialIcon from 'react-google-material-icons'
+
 import "./App.css";
 import DisplayList from "./displayList.js";
 import List from "./list.js";
-import "react-dates/lib/css/_datepicker.css";
 
 class App extends Component {
   //On refresh, the app pulls the items from localStorage and pushes to state. A number of other defaults are written here.
@@ -24,7 +26,8 @@ class App extends Component {
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleEditStatus = this.handleEditStatus.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleEditDate = this.handleEditDate.bind(this);
+    this.handleEditEndDate = this.handleEditEndDate.bind(this);
+    this.handleEditStartDate = this.handleEditStartDate.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
 
@@ -60,8 +63,8 @@ class App extends Component {
       itemArray.push({
         text: this.state.query,
         edit: false,
-        endDate: null,
-        startDate: null,
+        endDate: "00/00/0000",
+        startDate: "00/00/0000",
         color: "white",
         dateCreated: todays
       });
@@ -90,12 +93,6 @@ class App extends Component {
     alert("handleReset triggered");
   }
 
-  handleDate(e) {
-    this.setState({
-      date: e.target.value
-    });
-  }
-
   handleEditChange(e, index) {
     let items = this.state.items;
 
@@ -111,7 +108,21 @@ class App extends Component {
     localStorage.setItem("items", JSON.stringify(items));
   }
 
-  handleEditDate(e, index) {
+  handleEditEndDate = (e, index) => {
+    let items = this.state.items;
+
+    items[index] = Object.assign({}, items[index], {
+      endDate: e.target.value
+    });
+
+    this.setState({
+      items
+    });
+
+    localStorage.setItem("items", JSON.stringify(items));
+  }
+
+  handleEditStartDate = (e, index) => {
     let items = this.state.items;
 
     items[index] = Object.assign({}, items[index], {
@@ -164,25 +175,17 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <div className="container-buttons">
-            <div
-              className="Interactive-buttonleft"
-              onClick={onClickGenerator("Text Input")}
-            >
-              <h1 className="Cool-Styling">Input</h1>
-            </div>
-            <div
-              className="Interactive-buttonleft"
-              onClick={onClickGenerator("Display List")}
-            >
-              <h1 className="Cool-Styling">List</h1>
-            </div>
+          <h1>Prioritisation Application</h1>
           </div>
-          <div className="Dynamic-Elements-Container">
+
+          <div onClick={onClickGenerator("Text Input")}>
+              <MaterialIcon icon="add_circle" size={36}/>
+          </div>
+          <div>
             <div
               style={{
                 display:
-                  this.state.selectedTab === "Text Input" ? "block" : "none"
+                  this.state.selectedTab === "Text Input" ? "inline-block" : "none"
               }}
             >
               <List
@@ -197,7 +200,8 @@ class App extends Component {
                 handleDelete={this.handleDelete}
                 handleEditStatus={this.handleEditStatus}
                 handleEditChange={this.handleEditChange}
-                handleEditDate={this.handleEditDate}
+                handleEditEndDate={this.handleEditEndDate}
+                handleEditStartDate={this.handleEditStartDate}
                 selectedButton={this.state.selectedButton}
                 onDisplay={this.onDisplay}
                 swapArray={this.swapIndices}
@@ -208,7 +212,7 @@ class App extends Component {
             <div
               style={{
                 display:
-                  this.state.selectedTab === "Display List" ? "block" : "none"
+                  this.state.selectedTab === "Display List" ? "inline-block" : "none"
               }}
             >
               <DisplayList
@@ -216,17 +220,18 @@ class App extends Component {
                 handleDelete={this.handleDelete}
                 handleEditStatus={this.handleEditStatus}
                 handleEditChange={this.handleEditChange}
-                handleEditDate={this.handleEditDate}
+                handleEditEndDate={this.handleEditEndDate}
                 selectedButton={this.state.selectedButton}
                 onDisplay={this.onDisplay}
                 swapArray={this.swapIndices}
                 query={this.state.query}
                 handleReset={this.handleReset}
+                handleEditStartDate={this.handleEditStartDate}
               />
             </div>
           </div>
         </div>
-      </div>
+      
     );
   }
 }

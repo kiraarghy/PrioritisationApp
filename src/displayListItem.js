@@ -1,29 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import "./App.css";
-import {
-  DateRangePicker,
-  SingleDatePicker,
-  DayPickerRangeController
-} from "react-dates";
+import MaterialIcon from 'react-google-material-icons'
 
 class DisplayListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: null,
-      endDate: null
-    };
-  }
-
   render() {
     var textEditButton = (
-      <div
+      <span
         className="Interactive-buttonleft"
         onClick={e => this.props.handleEditStatus(e, this.props.index)}
-      >
-        <button type="submit">Edit Task</button>
-      </div>
+        alt="edit here">
+        <MaterialIcon icon="edit" size={20}/>
+      </span>
     );
 
     <div
@@ -34,21 +23,21 @@ class DisplayListItem extends React.Component {
     </div>;
 
     var deleteButton = (
-      <div
+      <span
         className="Interactive-buttonleft"
         onClick={e => this.props.handleDelete(e, this.props.index)}
       >
-        <button type="submit">Delete This Task</button>
-      </div>
+      <MaterialIcon icon="delete" size={20}/>
+      </span>
     );
 
     var textDisplayButton = (
-      <div
+      <span
         className="Interactive-buttonleft"
         onClick={e => this.props.handleEditStatus(e, this.props.index)}
       >
-        <button type="submit">Finish Edit</button>
-      </div>
+      <MaterialIcon icon="done" size={20}/>
+      </span>
     );
 
     var dateColor = {
@@ -56,60 +45,63 @@ class DisplayListItem extends React.Component {
     };
 
     return (
-      <div>
-        <div className="Dynamic-Elements-Container">
-          {this.props.item.edit === false
-            ? <div>
-                <div style={dateColor}>
-                  Title of task: {this.props.item.text}
-                </div>
-                {this.props.item.date !== "00/00/00"
-                  ? <div>
-                      Completion date for task: {this.props.item.date}
-                    </div>
-                  : ""}
-                <div>
-                  Date task created on: {this.props.item.dateCreated}
-                </div>{" "}
-                {textEditButton}{" "}
+      <div className="displayContent-Container">
+        <div >
+          {this.props.item.edit === false ? (
+            <div>
+              <div className="displayContent-Header">Title of task: {this.props.item.text}</div>
+              {this.props.item.endDate !== "00/00/00" ? (
+                <div>Completion date for task: {this.props.item.endDate}</div>
+              ) : (
+                ""
+              )}
+              {this.props.item.startDate !== "00/00/00" ? (
+                <div className='displayContent-Content'>Start date for task: {this.props.item.startDate}</div>
+              ) : (
+                ""
+              )}
+              <div className='displayContent-Content'>
+                Date task created on: {this.props.item.dateCreated}
+              </div>{" "}
+              {textEditButton}{" "}
+          {this.props.index > 0 && (
+            <span onClick={this.props.prioritiseThis} alt="Increase Priority" type="submit">
+            <MaterialIcon icon="publish" size={20}/>
+            </span>
+          )}
+            </div>
+            
+          ) : (
+            <div>
+              <div>
+                Change task title here:{" "}
+                <input
+                  value={this.props.item.text}
+                  type="text"
+                  onChange={e =>
+                    this.props.handleEditChange(e, this.props.index)}
+                />
               </div>
-            : <div>
-                <div>
-                  Change task title here:{" "}
-                  <input
-                    value={this.props.item.text}
-                    type="text"
-                    onChange={e =>
-                      this.props.handleEditChange(e, this.props.index)}
-                  />
-                </div>
-                <div>
-                  Change completion date here:<input
-                    value={this.state.startDate}
-                    onChange={e =>
-                      this.props.handleEditDate(e, this.props.index)}
-                  />
-                </div>
-                <div>
-                  {deleteButton}
-                  <DateRangePicker
-                    startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                    endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                    onDatesChange={({ startDate, endDate }) =>
-                      this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                    onFocusChange={focusedInput =>
-                      this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                  />
-                  {textDisplayButton}
-                </div>
-              </div>}
-        </div>
-        <div>
-          {this.props.index > 0 &&
-            <button onClick={this.props.prioritiseThis} type="submit">
-              Increase Priority
-            </button>}
+              <div>
+                Change completion date here:<input
+                  value={this.props.item.endDate}
+                  onChange={e =>
+                    this.props.handleEditEndDate(e, this.props.index)}
+                />
+              </div>
+              <div>
+                Change start date here:<input
+                  value={this.props.item.startDate}
+                  onChange={e =>
+                    this.props.handleEditStartDate(e, this.props.index)}
+                />
+              </div>
+              <div>
+                {deleteButton}
+                {textDisplayButton}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
