@@ -60,8 +60,8 @@ class App extends Component {
       itemArray.push({
         text: this.state.query,
         edit: false,
-        endDate: null,
-        startDate: null,
+        endingDate: "",
+        startingDate: "",
         color: "white",
         dateCreated: todays
       });
@@ -113,9 +113,9 @@ class App extends Component {
 
   handleEditDate(e, index) {
     let items = this.state.items;
-
+console.log(e.target.value)
     items[index] = Object.assign({}, items[index], {
-      startDate: e.target.value
+      startingDate: e.target.value
     });
 
     this.setState({
