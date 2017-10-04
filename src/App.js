@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import "react-dates/lib/css/_datepicker.css";
 import MaterialIcon from "react-google-material-icons";
+import styled from "styled-components";
 
 import "./App.css";
 import DisplayList from "./displayList.js";
 import List from "./list.js";
+
+const Add = styled.button`display: flex;`;
+
+const List = styled.div`visbility: ${props => props.addNew};`;
 
 class App extends Component {
   //On refresh, the app pulls the items from localStorage and pushes to state. A number of other defaults are written here.
@@ -12,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "Display List",
+      addNew: hidden,
       items: JSON.parse(localStorage.getItem("items")) || [],
       query: "",
       date: "",
@@ -44,9 +49,11 @@ class App extends Component {
     e.preventDefault();
 
     var itemArray = this.state.items;
-
+//make itemsError update the styling of input box to red and grey out the submit button.
     if (this.state.query === "") {
-      alert("Please enter an item");
+      this.setState ({
+        itemsError: true;
+      })
     } else {
       var today = new Date();
       var dd = today.getDate();
@@ -82,10 +89,6 @@ class App extends Component {
     this.setState({
       query: e.target.value
     });
-  }
-
-  handleReset() {
-    alert("handleReset triggered");
   }
 
   handleEditChange(e, index) {
@@ -156,82 +159,40 @@ class App extends Component {
 
   onDisplay(editOrText) {
     this.setState({
-      selectedButton: editOrText
+      addNew: false
     });
   }
 
   render() {
-    var onClickGenerator = Tab => {
-      if (this.state.selectedTab === "Text Input") {
-        return () => this.setState({ selectedTab: "Display List" });
-      }
-      return () => {
-        this.setState({ selectedTab: Tab });
-      };
-    };
-
     return (
-      <div className="App">
-        <div className="App-header">
-          <h1>Prioritisation Application</h1>
-        </div>
-
-        <div onClick={onClickGenerator("Text Input")}>
-          <MaterialIcon icon="add_circle" size={36} />
-        </div>
-        <div>
-          <div
-            style={{
-              display:
-                this.state.selectedTab === "Text Input"
-                  ? "inline-block"
-                  : "none"
-            }}
-          >
-            <List
-              handleChange={this.handleChange}
-              handleDate={this.handleDate}
-              addItem={this.addItem}
-              returnToTab={() => this.setState({ selectedTab: "Display List" })}
-            />
-            <DisplayList
-              items={this.state.items}
-              handleDelete={this.handleDelete}
-              handleEditStatus={this.handleEditStatus}
-              handleEditChange={this.handleEditChange}
-              handleEditEndDate={this.handleEditEndDate}
-              handleEditStartDate={this.handleEditStartDate}
-              selectedButton={this.state.selectedButton}
-              onDisplay={this.onDisplay}
-              swapArray={this.swapIndices}
-              query={this.state.query}
-              handleReset={this.handleReset}
-            />
-          </div>
-          <div
-            style={{
-              display:
-                this.state.selectedTab === "Display List"
-                  ? "inline-block"
-                  : "none"
-            }}
-          >
-            <DisplayList
-              items={this.state.items}
-              handleDelete={this.handleDelete}
-              handleEditStatus={this.handleEditStatus}
-              handleEditChange={this.handleEditChange}
-              handleEditEndDate={this.handleEditEndDate}
-              selectedButton={this.state.selectedButton}
-              onDisplay={this.onDisplay}
-              swapArray={this.swapIndices}
-              query={this.state.query}
-              handleReset={this.handleReset}
-              handleEditStartDate={this.handleEditStartDate}
-            />
-          </div>
-        </div>
-      </div>
+      <AppWrapper>
+        <Header>Prioritisation Application</Header>
+        <Add onClick={this.setState({ addNew: visible })}>
+        Add new task
+        </Add>
+        <ListWrapper>
+          <List
+            handleChange={this.handleChange}
+            handleDate={this.handleDate}
+            addItem={this.addItem}
+            addNew={this.addNew}
+            returnToTab={() => this.setState({ selectedTab: "Display List" })}
+          />
+          <DisplayList
+            items={this.state.items}
+            handleDelete={this.handleDelete}
+            handleEditStatus={this.handleEditStatus}
+            handleEditChange={this.handleEditChange}
+            handleEditEndDate={this.handleEditEndDate}
+            handleEditStartDate={this.handleEditStartDate}
+            selectedButton={this.state.selectedButton}
+            onDisplay={this.onDisplay}
+            swapArray={this.swapIndices}
+            query={this.state.query}
+            handleReset={this.handleReset}
+          />
+        </ListWrapper>
+      </AppWrapper>
     );
   }
 }

@@ -5,23 +5,35 @@ import "./App.css";
 import MaterialIcon from 'react-google-material-icons'
 
 class DisplayListItem extends React.Component {
+
   render() {
-    var textEditButton = (
+    const textEditButton = ( 
       <span
         className="Interactive-buttonleft"
         onClick={e => this.props.handleEditStatus(e, this.props.index)}
-        alt="edit here">
+        value="edit here">
         <MaterialIcon icon="edit" size={20}/>
       </span>
     );
-
-    <div
-      className="Interactive-buttonleft"
-      onClick={e => this.props.handleEditStatus(e, this.props.index)}
-    >
-      <button type="submit">Finish Edit</button>
-    </div>;
-
+//need to fix this, doesn't refresh dom enough for me to do this
+    var valuesEditValidator = () => {
+      var dateTest = new RegExp("^d{1,2}/d{1,2}/d{4}$");
+      var stringTest = new RegExp("^(?!s*$).+");
+      if (
+        dateTest.test(this.props.item.startDate) &&
+        dateTest.test(this.props.item.endDate) 
+      ) {
+        return (
+        <span
+          className="Interactive-buttonleft"
+          onClick={e => this.props.handleEditStatus(e, this.props.index)}
+          alt="edit here"
+        >
+          <MaterialIcon icon="edit" size={20} />
+        </span>
+        )
+      }
+    };
     var deleteButton = (
       <span
         className="Interactive-buttonleft"
@@ -65,8 +77,8 @@ class DisplayListItem extends React.Component {
               </div>{" "}
               {textEditButton}{" "}
           {this.props.index > 0 && (
-            <span onClick={this.props.prioritiseThis} alt="Increase Priority" type="submit">
-            <MaterialIcon icon="publish" size={20}/>
+            <span onClick={this.props.prioritiseThis} id="Increase Priority" type="submit">
+            <MaterialIcon type="button" aria-label="Increase Priority" icon="publish"  size={20}/>Increase Priority
             </span>
           )}
             </div>
@@ -98,7 +110,7 @@ class DisplayListItem extends React.Component {
               </div>
               <div>
                 {deleteButton}
-                {textDisplayButton}
+                {valuesEditValidator()}
               </div>
             </div>
           )}

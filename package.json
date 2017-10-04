@@ -8,10 +8,8 @@
     "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",
-    "react-daterange-picker": "^1.1.0",
-    "react-dates": "^12.5.0",
     "react-dom": "^15.6.1",
-    "react-google-material-icons": "^1.0.3",
+    "styled-components": "^2.2.1",
     "webpack": "^3.5.5"
   },
   "devDependencies": {
